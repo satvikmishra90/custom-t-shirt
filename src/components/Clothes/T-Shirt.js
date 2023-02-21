@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Image } from "react-konva";
 import { render } from "react-dom";
 import Konva from "konva";
-import tshirt from "../../img/tshirt.png";
+import tshirt from "../../img/tshirt.webp";
 
 class TShirt extends Component {
   constructor(props) {

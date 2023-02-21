@@ -37,15 +37,15 @@ class TextLayer extends Component {
       <Text
         name="text"
         offset={{
-          x: -150,
+          x: -80,
           y: -150
         }}
         width={200}
         wrap="char"
         align="center"
         stroke={this.props.textColor}
-        fontSize={20}
-        fontFamily="Calibri"
+        fontSize={14}
+        fontFamily="Roboto"
         opacity={1}
         draggable={true}
         text={this.state.text}
