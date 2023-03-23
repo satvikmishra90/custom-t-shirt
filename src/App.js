@@ -3,6 +3,7 @@ import "./App.css";
 import { Stage, Layer } from "react-konva";
 import { render } from "react-dom";
 import TShirt from "./components/Clothes/T-Shirt";
+import TShirt2 from "./components/Clothes/T-Shirt2";
 import ColorPicker from "./components/Options/ColorPicker";
 import Price from "./components/Options/Price";
 import TextAddOn from "./components/Options/Text";
@@ -11,6 +12,7 @@ import TextLayer from "./components/Layer/TextLayer";
 import LogoLayer from "./components/Layer/LogoLayer";
 import request from "superagent";
 import Sweater from "./components/Clothes/Sweater";
+import Sweater2 from "./components/Clothes/Sweater2";
 import Clothes from "./components/Options/Clothes";
 import Material from "./components/Options/Material";
 import TransformerComponent from "./components/Util/TransformerComponent";
@@ -37,7 +39,11 @@ class App extends Component {
       clothing: "tshirt",
       price: 0,
       selectedShapeName: "",
-      logoScale: []
+      logoScale: [],
+      textOn: false,
+      text: "",
+      textStyle: "style1",
+      fontFamily: "cursive"
     };
     this.onImageDrop = this.onImageDrop.bind(this);
   }
@@ -49,27 +55,24 @@ class App extends Component {
     });
   };
 
-  changeTextColor = color => {
-    this.setState({
-      textColor: color.hex
-    });
+changeTextColor = color => {
+    this.setState({ textColor: color.hex });
   };
+
 
   //Handle text change as user input
   handleTextChange = event => {
-    this.setState({
-      text: event.target.value
-    });
+    this.setState({ text: event.target.value });
   };
+ handleTextStyleChange = (textStyle, fontFamily) => {
+  this.setState({ textStyle, fontFamily });
+};
+
 
   //Check if adding text is on or off, when user turns it off
   //color goes back to default and so user doesn't see the $3 charge
-  handleTextChecked = name => event => {
-    if (this.state.textOn) {
-      this.setState({ [name]: event.target.checked, textColor: "#000000" });
-    } else {
-      this.setState({ [name]: event.target.checked });
-    }
+   handleTextChecked = name => event => {
+    this.setState({ [name]: event.target.checked });
   };
 
   //Returns the type of clothing that user chooses
@@ -80,21 +83,29 @@ class App extends Component {
       return <Sweater color={this.state.color} />;
     }
   };
+  clothing2 = clothes2 => {
+    if (clothes2 === "tshirt") {
+      return <TShirt2 color={this.state.color} />;
+    } else if (clothes2 === "sweater") {
+      return <Sweater2 color={this.state.color} />;
+    }
+  };
 
   //Returns the text layer if true
   textLayer = () => {
-    if (this.state.textOn) {
-      return (
-        <TextLayer
-          text={this.state.text}
-          textColor={this.state.textColor}
-          onTransform={newProps => {
-            this.handleTextTransform(newProps);
-          }}
-        />
-      );
-    }
-  };
+  if (this.state.textOn) {
+    return (
+      <TextLayer
+        text={this.state.text}
+        textColor={this.state.textColor}
+        onTransform={this.handleTransform}
+        textStyle={this.state.textStyle}
+        fontFamily={this.state.fontFamily}
+      />
+    );
+  }
+};
+
 
   //Returns the logo layer if true
   logoLayer = () => {
@@ -220,13 +231,35 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <div className="clothes">
+        <div className="CanvasContainer">
+        <div className="clothest" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
           <Stage
-            width={500}
-            height={500}
+            width={400}
+            height={400}
             onMouseDown={this.handleStageMouseDown}
           >
             <Layer>{this.clothing(this.state.clothing)}</Layer>
+            <Layer>
+              {this.textLayer()}
+              <TransformerComponent
+                selectedShapeName={this.state.selectedShapeName}
+              />
+            </Layer>
+            <Layer>
+              {this.logoLayer("")}
+              <TransformerComponent
+                selectedShapeName={this.state.selectedShapeName}
+              />
+            </Layer>
+          </Stage>
+          </div>
+          <div className="clothesb" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <Stage
+            width={400}
+            height={400}
+            onMouseDown={this.handleStageMouseDown}
+          >
+            <Layer>{this.clothing2(this.state.clothing)}</Layer>
             <Layer>
               {this.textLayer()}
               <TransformerComponent
@@ -240,7 +273,8 @@ class App extends Component {
               />
             </Layer>
           </Stage>
-        </div>
+          </div>
+          </div>
         <div className="options">
           <Clothes changeClothing={this.changeClothing} />
           <Price state={this.state} />
@@ -249,11 +283,14 @@ class App extends Component {
             clothing={this.state.clothing}
           />
           <TextAddOn
-            textOn={this.state.textOn}
-            handleTextChecked={this.handleTextChecked}
-            handleTextChange={this.handleTextChange}
-            changeTextColor={this.changeTextColor}
-          />
+                handleTextChange={this.handleTextChange}
+                handleTextChecked={this.handleTextChecked}
+                handleTextStyleChange={this.handleTextStyleChange}
+                textOn={this.state.textOn}
+                textStyle={this.state.textStyle}
+                fontFamily={this.state.fontFamily}
+                changeTextColor={this.changeTextColor}
+              />
           <Logo
             logoOn={this.state.logoOn}
             onImageDrop={this.onImageDrop}
@@ -264,7 +301,12 @@ class App extends Component {
               material={this.state.material}
               changeMaterial={this.changeMaterial}
             />
-          ) : null}
+          ) : (
+            <Material
+              material={this.state.material}
+              changeMaterial={this.changeMaterial}
+            />
+          )}
         </div>
       </div>
     );

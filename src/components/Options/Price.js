@@ -38,13 +38,13 @@ class Price extends Component {
     if (logoOn) {
       price += 10;
     }
-    return price;
+    // return price;
   };
 
   render() {
     return (
       <div className="price">
-        $
+        {/* $ */}
         {this.price(
           this.props.state.clothing,
           this.props.state.color,

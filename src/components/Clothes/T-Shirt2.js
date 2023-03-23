@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Image } from "react-konva";
 import { render } from "react-dom";
 import Konva from "konva";
-import scrubb from "../../img/man1b.jpeg";
-import scrubt from "../../img/man1t.png";
+import scrubb from "../../img/women2b.jpeg";
+import scrubt from "../../img/women2t.png";
 
 class Scrubs extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class Scrubs extends Component {
     this.getImage2();
   }
 
-  //Sets sweater to the stage
+  //Sets the bottom image (scrubb) to the stage
   getImage1() {
     const image1 = new window.Image();
     image1.src = scrubb;
@@ -75,7 +75,9 @@ class Scrubs extends Component {
   ref={node => {
     this.scrubTop = node;
   }}
+  // style={{ border: 'none' }} // set border to none
 />
+  
       </React.Fragment>
     );
   }

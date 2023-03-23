@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Image } from "react-konva";
 import { render } from "react-dom";
 import Konva from "konva";
-import scrubb from "../../img/man1b.jpeg";
-import scrubt from "../../img/man1t.png";
+import scrubb from "../../img/man2b.jpeg";
+import scrubt from "../../img/man2t.png";
 
 class Scrubs extends Component {
   constructor(props) {
@@ -75,6 +75,7 @@ class Scrubs extends Component {
   ref={node => {
     this.scrubTop = node;
   }}
+  style={{ border: 'none' }} // set border to none
 />
       </React.Fragment>
     );

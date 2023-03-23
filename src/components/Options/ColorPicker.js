@@ -8,8 +8,8 @@ class ColorPicker extends Component {
   }
   circleSize = 35;
   circleSpacing = 2;
-  tshirt = ["#ffffff", "#000000", "#ff0000", "	#008000"];
-  sweater = ["#ffffff", "#000000", "#ffff00", "#ff69b4"];
+  tshirt = ["#2a93d9", "#0D64A4", "#4961e1", "#061580", "#551361"];
+  sweater = ["#2a93d9", "#0D64A4", "#4961e1", "#061580", "#551361"];
 
   //changes the color to be shown depending on the clothing type
   render() {
